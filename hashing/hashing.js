@@ -23,7 +23,7 @@ var Blockchain = {
 Blockchain.blocks.push({
   index: 0,
   hash: "000000",
-  data: "",
+  data: "Genesis Block - The Power of a Smile by Tupac Shakur",
   timestamp: Date.now(),
 });
 
@@ -36,6 +36,9 @@ function createBlock(_data) {
   };
 
   block.hash = blockHash(block);
+  Blockchain.blocks.push(block);
+
+  return block;
 }
 
 // console.log(`Blockchain is valid: ${verifyChain(Blockchain)}`);
@@ -43,10 +46,20 @@ function createBlock(_data) {
 // **********************************
 
 function blockHash(bl) {
-  return crypto
-    .createHash("sha256")
-    .update
-    // TODO: use block data to calculate hash
-    ()
-    .digest("hex");
+  const strungBlock = JSON.stringify(bl);
+  //use block data to calculate hash
+  return crypto.createHash("sha256").update(strungBlock).digest("hex");
 }
+
+// insert each line into blockchain
+for (const line of poem) {
+  createBlock(line);
+}
+
+for (const block of Blockchain.blocks) {
+  console.log("🟥⚠️🟣 ~ file: hashing.js ~ line 40 ~ block", block);
+}
+
+// for (let i = 0; i < Blockchain.blocks.length; i++) {
+//   console.log("🟥⚠️🟣 ~ file: hashing.js ~ line 40 ~ block", Blockchain.blocks[i]);
+// }
